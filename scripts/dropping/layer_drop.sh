@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-port="21304"
-GPUs="0,1,2,3"
+# port="21304"
+# GPUs="0,1,2,3"
 
 dataset="c4_val"
 prune_data_type="pt"
@@ -14,7 +14,7 @@ target_layer="attn"
 drop_n=8
 
 model_name=mistral-base
-model_name_or_path=mistralai/Mistral-7B-v0.1
+model_name_or_path=mistralai/Mistral-7B-v0.3
 
 folder_name="${model_name}-${prune_method}_${target_layer}-${layer_drop_method}-drop${drop_n}"
 similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
@@ -24,7 +24,8 @@ echo ${folder_name}
 output_dir=../results_prune/${folder_name}
 prune_model_save_path=${output_dir}/checkpoint
 
-CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
+# CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
+  accelerate launch \
   src/compress.py \
   --stage prune \
   --model_name_or_path ${model_name_or_path} \
@@ -38,13 +39,13 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
   --logging_steps 10 \
-  --bf16 \
   --n_calibration_samples ${n_calibration_samples} \
   --prune_method ${prune_method} \
   --layer_drop_method ${layer_drop_method} \
   --drop_n ${drop_n} \
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
+    # --bf16 \
 
 
 layer_drop_method="post_dropping"
@@ -64,10 +65,10 @@ python src/compress.py \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
   --logging_steps 10 \
-  --bf16 \
   --n_calibration_samples ${n_calibration_samples} \
   --prune_method ${prune_method} \
   --layer_drop_method ${layer_drop_method} \
   --drop_n ${drop_n} \
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
+    # --bf16 \
