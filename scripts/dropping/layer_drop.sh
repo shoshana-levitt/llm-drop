@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-# port="21304"
-# GPUs="0,1,2,3"
+port="21304"
+GPUs="0,1,2,3"
 
 dataset="c4_val"
 prune_data_type="pt"
@@ -28,6 +28,7 @@ prune_model_save_path=${output_dir}/checkpoint
   accelerate launch \
   src/compress.py \
   --stage prune \
+  --bf16 \
   --model_name_or_path ${model_name_or_path} \
   --dataset ${dataset} \
   --dataset_dir ./src/llmtuner/data \
@@ -45,8 +46,6 @@ prune_model_save_path=${output_dir}/checkpoint
   --drop_n ${drop_n} \
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
-    # --bf16 \
-
 
 layer_drop_method="post_dropping"
 # set only_update_config to True to save the disk memory
@@ -54,6 +53,7 @@ only_update_config=False
 
 python src/compress.py \
   --stage prune \
+  --bf16 \
   --model_name_or_path ${model_name_or_path} \
   --dataset ${dataset} \
   --dataset_dir ./src/llmtuner/data \
@@ -71,4 +71,3 @@ python src/compress.py \
   --drop_n ${drop_n} \
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
-    # --bf16 \

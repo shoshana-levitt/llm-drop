@@ -59,8 +59,8 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                 accelerator.print('Skip the dropped layer: ', i)
                 continue
             sys.stderr.flush()
-            torch.cuda.empty_cache()
-            print_gpu_memory(accelerator)
+            # torch.cuda.empty_cache()
+            # print_gpu_memory(accelerator)
             layer = layers[i]
 
             if i in layer_indices:
@@ -101,7 +101,7 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                         outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j])[0]
                 for handle in handles:
                     handle.remove()
-                
+
                 dtype = torch.float32
 
                 if drop_norm:
@@ -117,7 +117,7 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                 cos_sim = accelerator.reduce(cos_sim, reduction="mean")  # 🔍 All reduce across devices
                 accelerator.print(f'layer {i} similarity: {cos_sim.item()}')
                 similarities[i] = cos_sim
-                
+
             else:
                 for j in range(num_samples):
                     if getattr(unwrapped_model.config, "model_type", None) == "llama":
