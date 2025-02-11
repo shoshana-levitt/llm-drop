@@ -47,7 +47,7 @@ prune_model_save_path=${output_dir}/checkpoint
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
 
-layer_drop_method="post_dropping"
+layer_drop_method="discrete"
 # set only_update_config to True to save the disk memory
 only_update_config=False
 
