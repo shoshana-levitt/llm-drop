@@ -25,7 +25,6 @@ output_dir=../results_prune/${folder_name}
 prune_model_save_path=${output_dir}/checkpoint
 
 CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
-  accelerate launch \
   src/compress.py \
   --stage prune \
   --model_name_or_path ${model_name_or_path} \
@@ -34,7 +33,7 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --split "train" \
   --layer_drop_norm True \
   --target_layer ${target_layer} \
-  --only_update_config True \
+  --only_update_config False \
   --prune_data_type ${prune_data_type} \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
@@ -46,6 +45,7 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --drop_n ${drop_n} \
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
+  # accelerate launch \
 
 layer_drop_method="discrete"
 # set only_update_config to True to save the disk memory
