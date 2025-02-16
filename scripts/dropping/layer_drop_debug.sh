@@ -30,7 +30,7 @@ mkdir -p ${output_dir}
 mkdir -p $(dirname ${similarity_cache_file})
 
 CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
-  src/compress.py \
+  .src/compress.py \
   --stage prune \
   --model_name_or_path ${model_name_or_path} \
   --dataset ${dataset} \
