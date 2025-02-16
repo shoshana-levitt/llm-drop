@@ -24,11 +24,10 @@ echo ${folder_name}
 output_dir=../results_prune/${folder_name}
 prune_model_save_path=${output_dir}/checkpoint
 
-# CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
+CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   accelerate launch \
   src/compress.py \
   --stage prune \
-  --bf16 \
   --model_name_or_path ${model_name_or_path} \
   --dataset ${dataset} \
   --dataset_dir ./src/llmtuner/data \
@@ -40,6 +39,7 @@ prune_model_save_path=${output_dir}/checkpoint
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
   --logging_steps 10 \
+  --bf16 \
   --n_calibration_samples ${n_calibration_samples} \
   --prune_method ${prune_method} \
   --layer_drop_method ${layer_drop_method} \
