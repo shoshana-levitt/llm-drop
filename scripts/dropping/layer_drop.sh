@@ -33,7 +33,7 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --split "train" \
   --layer_drop_norm True \
   --target_layer ${target_layer} \
-  --only_update_config False \
+  --only_update_config True \
   --prune_data_type ${prune_data_type} \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
@@ -45,15 +45,14 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --drop_n ${drop_n} \
   --similarity_cache_file ${similarity_cache_file} \
   --prune_model_save_path ${prune_model_save_path}
-  # accelerate launch \
 
-layer_drop_method="discrete"
+
+layer_drop_method="post_dropping"
 # set only_update_config to True to save the disk memory
 only_update_config=False
 
 python src/compress.py \
   --stage prune \
-  --bf16 \
   --model_name_or_path ${model_name_or_path} \
   --dataset ${dataset} \
   --dataset_dir ./src/llmtuner/data \
@@ -65,6 +64,7 @@ python src/compress.py \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
   --logging_steps 10 \
+  --bf16 \
   --n_calibration_samples ${n_calibration_samples} \
   --prune_method ${prune_method} \
   --layer_drop_method ${layer_drop_method} \
