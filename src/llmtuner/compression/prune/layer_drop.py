@@ -59,8 +59,8 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                 accelerator.print('Skip the dropped layer: ', i)
                 continue
             sys.stderr.flush()
-            # torch.cuda.empty_cache()
-            # print_gpu_memory(accelerator)
+            torch.cuda.empty_cache()
+            print_gpu_memory(accelerator)
             layer = layers[i]
 
             if i in layer_indices:
