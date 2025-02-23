@@ -1,4 +1,6 @@
-"auto_map": {
+{
+  "auto_map": {
     "AutoConfig": "configuration_dropped_mistral.MistralConfig",
     "AutoModelForCausalLM": "modeling_dropped_mistral.MistralForCausalLM"
-  },
+  }
+}
