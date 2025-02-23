@@ -21,8 +21,8 @@ from transformers.utils import logging
 logger = logging.get_logger(__name__)
 
 MISTRAL_PRETRAINED_CONFIG_ARCHIVE_MAP = {
-    "mistralai/Mistral-7B-v0.1": "https://huggingface.co/mistralai/Mistral-7B-v0.1/resolve/main/config.json",
-    "mistralai/Mistral-7B-Instruct-v0.1": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1/resolve/main/config.json",
+    "mistralai/Mistral-7B-v0.3": "https://huggingface.co/mistralai/Mistral-7B-v0.3/resolve/main/config.json",
+    "mistralai/Mistral-7B-Instruct-v0.3": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3/resolve/main/config.json",
 }
 
 
@@ -30,10 +30,10 @@ class MistralConfig(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a [`MistralModel`]. It is used to instantiate an
     Mistral model according to the specified arguments, defining the model architecture. Instantiating a configuration
-    with the defaults will yield a similar configuration to that of the Mistral-7B-v0.1 or Mistral-7B-Instruct-v0.1.
+    with the defaults will yield a similar configuration to that of the Mistral-7B-v0.3 or Mistral-7B-Instruct-v3.
 
-    [mistralai/Mistral-7B-v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1)
-    [mistralai/Mistral-7B-Instruct-v0.1](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1)
+    [mistralai/Mistral-7B-v0.3](https://huggingface.co/mistralai/Mistral-7B-v0.3)
+    [mistralai/Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3)
 
     Configuration objects inherit from [`PretrainedConfig`] and can be used to control the model outputs. Read the
     documentation from [`PretrainedConfig`] for more information.

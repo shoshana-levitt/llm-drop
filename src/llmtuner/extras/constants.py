@@ -457,8 +457,8 @@ register_model_group(
 register_model_group(
     models={
         "Mistral-7B": {
-            DownloadSource.DEFAULT: "mistralai/Mistral-7B-v0.1",
-            DownloadSource.MODELSCOPE: "AI-ModelScope/Mistral-7B-v0.1",
+            DownloadSource.DEFAULT: "mistralai/Mistral-7B-v0.3",
+            DownloadSource.MODELSCOPE: "AI-ModelScope/Mistral-7B-v0.3",
         },
         "Mistral-7B-Chat": {
             DownloadSource.DEFAULT: "mistralai/Mistral-7B-Instruct-v0.1",
