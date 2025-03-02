@@ -16,15 +16,17 @@
 """ Mistral model configuration"""
 from transformers.configuration_utils import PretrainedConfig
 from transformers.utils import logging
+import FILE
 
 
 logger = logging.get_logger(__name__)
 
 MISTRAL_PRETRAINED_CONFIG_ARCHIVE_MAP = {
-    "mistralai/Mistral-7B-v0.1": "https://huggingface.co/mistralai/Mistral-7B-v0.1/resolve/main/config.json",
-    "mistralai/Mistral-7B-Instruct-v0.1": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1/resolve/main/config.json",
+    # "mistralai/Mistral-7B-v0.1": "https://huggingface.co/mistralai/Mistral-7B-v0.1/resolve/main/config.json",
+    # "mistralai/Mistral-7B-Instruct-v0.1": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1/resolve/main/config.json",
+    "mistralai/Mistral-7B-v0.1": "./config.json",
+    "mistralai/Mistral-7B-Instruct-v0.1": "./config.json",
 }
-
 
 class MistralConfig(PretrainedConfig):
     r"""
