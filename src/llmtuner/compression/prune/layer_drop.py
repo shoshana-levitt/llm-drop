@@ -113,6 +113,8 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
 
                 # 🔍 Calculate similarity (output+input due to residual connection)
                 cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
+                print('cos_sim data type: type({cos_sim})')
+                print('cos_sim: {cos_sim}')
                 cos_sim = cos_sim.mean()
                 cos_sim = accelerator.reduce(cos_sim, reduction="mean")  # 🔍 All reduce across devices
                 accelerator.print(f'layer {i} similarity: {cos_sim.item()}')
