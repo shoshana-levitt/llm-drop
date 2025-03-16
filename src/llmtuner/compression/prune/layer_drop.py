@@ -142,7 +142,6 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
 
     accelerator.print("similarities\n", similarities)
     accelerator.print(f"cos_sim data type: {type(cos_sim)}")
-    accelerator.print(f"cos_sim: {cos_sim}")
 
     return similarities
 
