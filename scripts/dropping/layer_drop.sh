@@ -14,7 +14,7 @@ target_layer="attn"
 drop_n=8
 
 model_name=mistral-base
-model_name_or_path=mistralai/Mistral-7B-v0.1 # change path to shoshana-levitt/Mistral-7B-v0.1
+model_name_or_path=shoshana-levitt/Mistral-7B-v0.1 # change path to shoshana-levitt/Mistral-7B-v0.1
 
 folder_name="${model_name}-${prune_method}_${target_layer}-${layer_drop_method}-drop${drop_n}"
 similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
