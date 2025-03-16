@@ -113,6 +113,8 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
 
                 # 🔍 Calculate similarity (output+input due to residual connection)
                 cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
+                logger.info(f"cos_sim data type: {type(cos_sim)}")
+                logger.info(f"cos_sim: {cos_sim}")
                 accelerator.print(f"cos_sim data type: {type(cos_sim)}")
                 accelerator.print(f"cos_sim: {cos_sim}")
                 cos_sim = cos_sim.mean()
