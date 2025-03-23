@@ -16,13 +16,14 @@ from .io import create_dir
 from .utils import print_gpu_memory, prepare_calibration_input, auto_map, CUSTOM_FILE
 from .wrapper import HiddenStatesRecordWrapper
 
+import numpy as np
 from npeet import entropy_estimators as ee
 
 logger = logging.getLogger(__name__)
 
 #  🔍 compute similarity
 @no_grad()
-def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerator, num_samples: int, drop_norm: bool, target_layer: str, cache_file=None):
+def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerator, num_samples: int, drop_norm: bool, sim_typ: str, target_layer: str, cache_file=None):
     device = accelerator.device
 
     if cache_file is not None and os.path.exists(cache_file):
@@ -113,7 +114,7 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                     input_hidden_states = torch.cat(wrapped_module_pre_norm.output_hidden_states, dim=0).to(dtype).to(device)
                     output_hidden_states = torch.cat(wrapped_module.output_hidden_states, dim=0).to(dtype).to(device)
 
-                if sim_measure = cos_sim:
+                if sim_type == 'cos_sim':
                     # 🔍 Calculate similarity (output+input due to residual connection)
                     cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
                     cos_sim = cos_sim.mean()
@@ -121,7 +122,7 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                     accelerator.print(f'layer {i} similarity: {cos_sim.item()}')
                     similarities[i] = cos_sim
 
-                elif sim_measure = mut_info:
+                elif sim_type == 'mut_info':
                     np_input_hidden_states = input_hidden_states.cpu().detach().numpy
                     np_output_hidden_states = output_hidden_states.cpu().detach().numpy
                     mut_info = ee.mi(np_input_hidden_states, np_output_hidden_states)
@@ -158,11 +159,11 @@ def discrete_layer_dropping(args, model, dataloader: DataLoader, accelerator: Ac
     drop_n = args.drop_n
 
     if args.target_layer == 'all':
-        similarities_attn = get_layer_similarities(model, dataloader, accelerator, num_samples, args.layer_drop_norm, target_layer='attn', cache_file=args.similarity_cache_file.replace("all", "all_attn"))
-        similarities_mlp = get_layer_similarities(model, dataloader, accelerator, num_samples, args.layer_drop_norm, target_layer='mlp', cache_file=args.similarity_cache_file.replace("all", "all_mlp"))
+        similarities_attn = get_layer_similarities(model, dataloader, accelerator, num_samples, args.layer_drop_norm, args.sim_type,target_layer='attn', cache_file=args.similarity_cache_file.replace("all", "all_attn"))
+        similarities_mlp = get_layer_similarities(model, dataloader, accelerator, num_samples, args.layer_drop_norm, args.sim_type, target_layer='mlp', cache_file=args.similarity_cache_file.replace("all", "all_mlp"))
         similarities = torch.cat((similarities_attn, similarities_mlp), dim=0)
     else:
-        similarities = get_layer_similarities(model, dataloader, accelerator, num_samples, args.layer_drop_norm, target_layer=args.target_layer, cache_file=args.similarity_cache_file)
+        similarities = get_layer_similarities(model, dataloader, accelerator, num_samples, args.layer_drop_norm, args.sim_type,target_layer=args.target_layer, cache_file=args.similarity_cache_file)
 
     sorted_similarities, sorted_layer_id = torch.sort(similarities, dim=0, descending=True)
 

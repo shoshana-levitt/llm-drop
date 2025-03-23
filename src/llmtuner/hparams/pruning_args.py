@@ -109,6 +109,11 @@ class PruningArguments:
         metadata={"help": 'Cached file storing the similarity scores across layers to reduce the computation consumption. '
                           'If the file does not exist, it will be created.'},
     )
+    drop_type: Optional[str] = field(
+        default="cos_sim",
+        metadata={"help": 'Similary type used for dropping',
+            "choices": ["cos_sim", "mut_info"]}
+    )
 
     # 🔍 For gate-remapping
     pruned_model_path: Optional[str] = field(
