@@ -12,8 +12,8 @@ prune_method="layer_drop"
 layer_drop_method="discrete"
 target_layer="attn"
 drop_n=8
-# sim_type="mut_info"
-sim_type="cos_sim"
+sim_type="mut_info"
+# sim_type="cos_sim"
 
 model_name=mistral-base
 model_name_or_path=shoshana-levitt/Mistral-7B-v0.1 # change path to shoshana-levitt/Mistral-7B-v0.1
