@@ -12,7 +12,7 @@ prune_method="layer_drop"
 layer_drop_method="discrete"
 target_layer="attn"
 drop_n=8
-drop_type="mut_info"
+sim_type="mut_info"
 
 model_name=mistral-base
 model_name_or_path=shoshana-levitt/Mistral-7B-v0.1 # change path to shoshana-levitt/Mistral-7B-v0.1
@@ -33,7 +33,7 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --dataset_dir ./src/llmtuner/data \
   --split "train" \
   --layer_drop_norm True \
-  --drop_type ${drop_type} \
+  --sim_type ${sim_type} \
   --target_layer ${target_layer} \
   --only_update_config True \
   --prune_data_type ${prune_data_type} \
