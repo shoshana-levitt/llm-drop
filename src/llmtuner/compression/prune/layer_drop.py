@@ -126,6 +126,7 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                     np_input_hidden_states = input_hidden_states.cpu().detach().numpy
                     np_output_hidden_states = output_hidden_states.cpu().detach().numpy
                     mut_info = ee.mi(np_input_hidden_states, np_output_hidden_states)
+                    accelerator.print(f'layer {i} similarity: {mut_info.item()}')
                     similarities[i] = mut_info
 
             else:
