@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 #  🔍 compute similarity
 @no_grad()
-def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerator, num_samples: int, drop_norm: bool, sim_typ: str, target_layer: str, cache_file=None):
+def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerator, num_samples: int, drop_norm: bool, sim_type: str, target_layer: str, cache_file=None):
     device = accelerator.device
 
     if cache_file is not None and os.path.exists(cache_file):
