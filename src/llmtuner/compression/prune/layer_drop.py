@@ -16,6 +16,8 @@ from .io import create_dir
 from .utils import print_gpu_memory, prepare_calibration_input, auto_map, CUSTOM_FILE
 from .wrapper import HiddenStatesRecordWrapper
 
+from npeet import entropy_estimators as ee
+
 logger = logging.getLogger(__name__)
 
 #  🔍 compute similarity
@@ -111,12 +113,19 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                     input_hidden_states = torch.cat(wrapped_module_pre_norm.output_hidden_states, dim=0).to(dtype).to(device)
                     output_hidden_states = torch.cat(wrapped_module.output_hidden_states, dim=0).to(dtype).to(device)
 
-                # 🔍 Calculate similarity (output+input due to residual connection)
-                cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
-                cos_sim = cos_sim.mean()
-                cos_sim = accelerator.reduce(cos_sim, reduction="mean")  # 🔍 All reduce across devices
-                accelerator.print(f'layer {i} similarity: {cos_sim.item()}')
-                similarities[i] = cos_sim
+                if sim_measure = cos_sim:
+                    # 🔍 Calculate similarity (output+input due to residual connection)
+                    cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
+                    cos_sim = cos_sim.mean()
+                    cos_sim = accelerator.reduce(cos_sim, reduction="mean")  # 🔍 All reduce across devices
+                    accelerator.print(f'layer {i} similarity: {cos_sim.item()}')
+                    similarities[i] = cos_sim
+
+                elif sim_measure = mut_info:
+                    np_input_hidden_states = input_hidden_states.cpu().detach().numpy
+                    np_output_hidden_states = output_hidden_states.cpu().detach().numpy
+                    mut_info = ee.mi(np_input_hidden_states, np_output_hidden_states)
+                    similarities[i] = mut_info
 
             else:
                 for j in range(num_samples):
