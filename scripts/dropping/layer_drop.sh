@@ -17,7 +17,6 @@ model_name=mistral-base
 model_name_or_path=shoshana-levitt/Mistral-7B-v0.1 # change path to shoshana-levitt/Mistral-7B-v0.1
 
 folder_name="${model_name}-${prune_method}_${target_layer}-${layer_drop_method}-drop${drop_n}"
-similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
 
 echo ${folder_name}
 
@@ -27,6 +26,8 @@ prune_model_save_path=${output_dir}/checkpoint
 # COSINE SIMILARITY
 
 sim_type="cos_sim"
+
+similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${sim_type}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
 
 CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   src/compress.py \
@@ -81,6 +82,8 @@ python src/compress.py \
 # MUTUAL INFORMATION
 
 sim_type="mut_info"
+
+similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${sim_type}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
 
 CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   src/compress.py \
