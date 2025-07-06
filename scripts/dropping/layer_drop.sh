@@ -23,7 +23,7 @@ sim_type="cos_sim"
 folder_name="${model_name}-${prune_method}_${sim_type}_${target_layer}-${layer_drop_method}-drop${drop_n}"
 echo ${folder_name}
 output_dir=../results_prune/${folder_name}
-prune_model_save_path=${output_dir}/checkpoint
+prune_model_save_path=${output_dir}/checkpoint_${sim_type}
 similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${sim_type}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
 
 CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
@@ -83,7 +83,7 @@ sim_type="mut_info"
 folder_name="${model_name}-${prune_method}_${sim_type}_${target_layer}-${layer_drop_method}-drop${drop_n}"
 echo ${folder_name}
 output_dir=../results_prune/${folder_name}
-prune_model_save_path=${output_dir}/checkpoint
+prune_model_save_path=${output_dir}/checkpoint_${sim_type}
 similarity_cache_file="../results_prune/cache/${model_name}-${prune_method}_${sim_type}_${target_layer}-${dataset}-${n_calibration_samples}samples.pt"
 
 layer_drop_method="discrete"
