@@ -103,11 +103,8 @@ def run_prune(
     accelerator.print(f"model: {model}")
     if pruning_args.prune_model_save_path is not None:
         if pruning_args.prune_method == "layer_drop":
-            if pruning_args.sim_type == 'cos_sim':
-                file_suffix = "_cos_sim"
-            elif pruning_args.sim_type == 'mut_info':
-                file_suffix = "_mut_info"
-            save_layer_dropped_config(pruning_args.target_layer, pruning_args.prune_model_save_path + file_suffix, model, tokenizer, accelerator, dropped_layer_list=dropped_layer_list)
+
+            save_layer_dropped_config(pruning_args.target_layer, pruning_args.prune_model_save_path, model, tokenizer, accelerator, dropped_layer_list=dropped_layer_list)
         elif pruning_args.prune_method == "block_drop":
             save_block_dropped_config(pruning_args.prune_model_save_path, model, tokenizer, accelerator, dropped_layer_list=dropped_layer_list)
         else:
