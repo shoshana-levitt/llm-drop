@@ -13,11 +13,11 @@ layer_drop_method="discrete"
 target_layer="attn"
 drop_n=8
 
-model_name=mistral-base
-model_name_or_path=shoshana-levitt/Mistral-7B-v0.1
+# model_name=mistral-base
+# model_name_or_path=shoshana-levitt/Mistral-7B-v0.1
 
-# model_name=llama-base
-# model_name_or_path=shoshana-levitt/Llama-2-7b-hf
+model_name=llama-base
+model_name_or_path=shoshana-levitt/Meta-Llama-3-8B
 
 # COSINE SIMILARITY
 
