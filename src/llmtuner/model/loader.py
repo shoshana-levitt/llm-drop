@@ -55,7 +55,7 @@ def load_model_and_tokenizer(
         padding_side="right",
         **config_kwargs,
     )
-    patch_tokenizer(tokenizer)
+    # patch_tokenizer(tokenizer)
 
     config = AutoConfig.from_pretrained(model_args.model_name_or_path, **config_kwargs)
     config.use_cache=False
