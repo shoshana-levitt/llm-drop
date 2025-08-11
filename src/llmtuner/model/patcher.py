@@ -246,7 +246,7 @@ def _prepare_model_for_training(
 
 def patch_tokenizer(tokenizer: "PreTrainedTokenizer") -> None:
     print("PreTainedTokenizerBase._pad: ")
-    print(PreTrainedTokenizerBase._pad.__func__)
+    print(PreTrainedTokenizerBase._pad)
     if "PreTrainedTokenizerBase" not in str(tokenizer._pad.__func__):
         tokenizer._pad = MethodType(PreTrainedTokenizerBase._pad, tokenizer)
 
