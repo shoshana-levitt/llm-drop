@@ -136,5 +136,5 @@ def register_autoclass(config: "PretrainedConfig", model: "PreTrainedModel", tok
         config.__class__.register_for_auto_class()
     if "AutoModelForCausalLM" in getattr(config, "auto_map", {}):
         model.__class__.register_for_auto_class()
-    if "AutoTokenizer" in tokenizer.init_kwargs.get("auto_map", {}):
-        tokenizer.__class__.register_for_auto_class()
+    # if "AutoTokenizer" in tokenizer.init_kwargs.get("auto_map", {}):
+    #     tokenizer.__class__.register_for_auto_class()
